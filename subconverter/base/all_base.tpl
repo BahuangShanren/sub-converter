@@ -15,7 +15,7 @@ profile:
 dns:
   enable: true
   ipv6: true
-  listen: '0.0.0.0:53'
+  listen: 0.0.0.0:5353
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
@@ -31,11 +31,11 @@ dns:
     - "*.msftconnecttest.com"
     - WORKGROUP
   nameserver:
-{% if default(request.clash.dot, "false") == "true" %}
+{% if default(request.clash.dot, "true") == "true" %}
     - "tls://dns.alidns.com:853"
     - "tls://dot.pub:853"
 {% endif %}
-{% if default(request.clash.doh, "false") == "true" %}
+{% if default(request.clash.doh, "true") == "true" %}
     - "https://dns.alidns.com/dns-query"
     - "https://doh.pub/dns-query"
 {% else %}
@@ -47,14 +47,14 @@ dns:
     - "[2402:4e00::]:53"
 {% endif %}
   fallback:
-{% if default(request.clash.dot, "false") == "true" %}
+{% if default(request.clash.dot, "true") == "true" %}
     - "tls://1.1.1.1:853"
     - "tls://8.8.4.4:853"
     - "tls://dns10.quad9.net:853"
     - "tls://security-filter-dns.cleanbrowsing.org:853"
     - "tls://uncensored.dns.dnswarden.com:853"
 {% endif %}
-{% if default(request.clash.doh, "false") == "true" %}
+{% if default(request.clash.doh, "true") == "true" %}
     - "https://cloudflare-dns.com/dns-query"
     - "https://dns.google/dns-query"
     - "https://dns10.quad9.net/dns-query"
